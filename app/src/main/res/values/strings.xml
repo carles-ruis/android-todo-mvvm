@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ToDo List</string>
     <string name="cancel">Cancel</string>
+    <string name="unknown_error">Sorry! Something went wrong</string>
 
     <string name="main_title">@string/app_name</string>
     <string name="main_todo_duedate">Due date: %s</string>

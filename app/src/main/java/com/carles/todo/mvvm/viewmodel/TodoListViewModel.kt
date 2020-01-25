@@ -5,6 +5,7 @@ import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.carles.todo.mvvm.Resource
 import com.carles.todo.mvvm.SingleLiveEvent
 import com.carles.todo.mvvm.data.TodoRepository
 import com.carles.todo.mvvm.model.Todo
@@ -20,8 +21,8 @@ class TodoListViewModel(
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
 
-    private val _todoListLiveData: LiveData<List<Todo>>
-    val todoListLiveData: LiveData<List<Todo>> get() = _todoListLiveData
+    private val _todoListLiveData: LiveData<Resource<List<Todo>>>
+    val todoListLiveData: LiveData<Resource<List<Todo>>> get() = _todoListLiveData
 
     private val _navigateToAddTodo = SingleLiveEvent<Todo>()
     val navigateToAddTodo: LiveData<Todo> get() = _navigateToAddTodo

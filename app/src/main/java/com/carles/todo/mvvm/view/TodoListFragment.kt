@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.carles.todo.mvvm.R
+import com.carles.todo.mvvm.Resource
 import com.carles.todo.mvvm.model.Todo
 import com.carles.todo.mvvm.viewmodel.TodoListViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -47,19 +49,6 @@ class TodoListFragment : Fragment() {
         todolist_fab.setOnClickListener { checkPermissionsAndAddTodo() }
     }
 
-    private fun observeViewModel() {
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
-            progress.visibility = if (it) VISIBLE else GONE
-        })
-        viewModel.todoListLiveData.observe(viewLifecycleOwner, Observer { todos ->
-            adapter.items = todos.toMutableList()
-        })
-        viewModel.navigateToAddTodo.observe(viewLifecycleOwner, Observer { todo ->
-            Navigation.findNavController(view!!)
-                .navigate(TodoListFragmentDirections.actionTodoListFragmentToAddTodoFragment(todo))
-        })
-    }
-
     private fun checkPermissionsAndAddTodo() {
         val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
         activity?.let {
@@ -77,6 +66,41 @@ class TodoListFragment : Fragment() {
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
+    }
+
+    private fun observeViewModel() {
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
+            progress.visibility = if (it) VISIBLE else GONE
+        })
+        viewModel.todoListLiveData.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Resource.Loading -> showLoading()
+                is Resource.Failure -> showError(result.throwable.message)
+                is Resource.Success -> showItems(result.data)
+            }
+        })
+        viewModel.navigateToAddTodo.observe(viewLifecycleOwner, Observer { todo ->
+            Navigation.findNavController(view!!)
+                .navigate(TodoListFragmentDirections.actionTodoListFragmentToAddTodoFragment(todo))
+        })
+    }
+
+    private fun showLoading() {
+        progress.visibility = VISIBLE
+    }
+
+    private fun hideLoading() {
+        progress.visibility = GONE
+    }
+
+    private fun showError(message: String?) {
+        hideLoading()
+        message?.let { Toast.makeText(context, it, Toast.LENGTH_LONG).show() }
+    }
+
+    private fun showItems(items: List<Todo>?) {
+        hideLoading()
+        items?.let { adapter.items = it.toMutableList() }
     }
 
     private fun navigateToEditTodo(todo: Todo) {

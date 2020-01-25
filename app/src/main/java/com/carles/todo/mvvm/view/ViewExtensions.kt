@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
+import com.carles.todo.mvvm.Resource
 import java.util.*
 
 const val EXTRA_TODO = "extra_todo"
