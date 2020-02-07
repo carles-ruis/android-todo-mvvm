@@ -1,9 +1,9 @@
 package com.carles.todo.mvvm
 
 import androidx.room.Room
-import com.carles.todo.mvvm.data.TodoDatabase
-import com.carles.todo.mvvm.data.TodoRepository
 import com.carles.todo.mvvm.model.Todo
+import com.carles.todo.mvvm.model.TodoDatabase
+import com.carles.todo.mvvm.model.TodoRepository
 import com.carles.todo.mvvm.viewmodel.TodoListViewModel
 import com.carles.todo.mvvm.viewmodel.TodoViewModel
 import com.google.android.gms.location.LocationServices

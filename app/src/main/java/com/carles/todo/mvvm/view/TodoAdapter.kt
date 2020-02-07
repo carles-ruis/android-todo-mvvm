@@ -9,7 +9,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_todo.*
 
 class TodoAdapter(private val onEditClicked: (Todo) -> Unit, private val onDeleteClicked: (Todo) -> Unit) :
-        RecyclerView.Adapter<TodoAdapter.ViewHolder>() {
+    RecyclerView.Adapter<TodoAdapter.ViewHolder>() {
 
     var items = mutableListOf<Todo>()
         set(value) {
@@ -19,7 +19,7 @@ class TodoAdapter(private val onEditClicked: (Todo) -> Unit, private val onDelet
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            ViewHolder(parent.inflate(R.layout.item_todo))
+        ViewHolder(parent.inflate(R.layout.item_todo))
 
     override fun getItemCount() = items.size
 
@@ -54,8 +54,10 @@ class TodoAdapter(private val onEditClicked: (Todo) -> Unit, private val onDelet
 
         fun onBindView(item: Todo) {
             todo_name_textview.text = item.name
-            todo_duedate_textview.text = String.format(resources.getString(R.string.main_todo_duedate), item.date.toFormattedDateString())
-            todo_location_textview.text = String.format(resources.getString(R.string.main_todo_location), item.latitude, item.longitude)
+            todo_duedate_textview.text =
+                String.format(resources.getString(R.string.main_todo_duedate), item.date.toFormattedDateString())
+            todo_location_textview.text =
+                String.format(resources.getString(R.string.main_todo_location), item.location.latitude, item.location.longitude)
         }
     }
 

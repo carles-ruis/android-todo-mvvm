@@ -16,7 +16,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_todo.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import org.koin.ext.getOrCreateScope
 
 abstract class TodoFragment : Fragment() {
 
@@ -57,7 +56,9 @@ abstract class TodoFragment : Fragment() {
         viewModel.todo.observe(viewLifecycleOwner, Observer { todo ->
             todo_name_edittext.setText(todo.name)
             todo_duedate_edittext.setText(todo.date.toFormattedDateString())
-            todo_location_edittext.setText(getString(R.string.main_todo_location_formatted, todo.latitude, todo.longitude))
+            todo_location_edittext.setText(
+                getString(R.string.main_todo_location_formatted, todo.location.latitude, todo.location.longitude)
+            )
         })
         viewModel.openCalendarEvent.observe(viewLifecycleOwner, Observer { date ->
             showCalendarWithDate(date)

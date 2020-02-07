@@ -4,10 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.carles.todo.mvvm.AppExecutors
 import com.carles.todo.mvvm.SingleLiveEvent
-import com.carles.todo.mvvm.data.TodoRepository
 import com.carles.todo.mvvm.model.Todo
+import com.carles.todo.mvvm.model.TodoRepository
 
 class TodoViewModel(
     application: Application,

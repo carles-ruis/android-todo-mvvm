@@ -1,14 +1,12 @@
-package com.carles.todo.mvvm.data
+package com.carles.todo.mvvm.model
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.carles.todo.mvvm.model.Todo
 
 @Dao
 interface TodoDao {
 
     @Query("SELECT * FROM todo")
-    // LiveData objects are returned asynchronously outside the main thread
     fun getTodos() : LiveData<List<Todo>>
 
     @Insert

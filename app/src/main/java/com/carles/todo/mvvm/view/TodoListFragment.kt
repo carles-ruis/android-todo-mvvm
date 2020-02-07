@@ -9,7 +9,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -53,16 +52,16 @@ class TodoListFragment : Fragment() {
         val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
         activity?.let {
             if (ContextCompat.checkSelfPermission(it, locationPermission) == PackageManager.PERMISSION_GRANTED) {
-                viewModel.addTodo()
+                viewModel.addTodo(true)
             } else {
-                ActivityCompat.requestPermissions(it, arrayOf(locationPermission), REQUEST_PERMISSION_FOR_ADD_LOCATION)
+                requestPermissions(arrayOf(locationPermission), REQUEST_PERMISSION_FOR_ADD_LOCATION)
             }
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_PERMISSION_FOR_ADD_LOCATION) {
-            viewModel.addTodo()
+            viewModel.addTodo(grantResults[0] == PackageManager.PERMISSION_GRANTED)
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
@@ -118,7 +117,6 @@ class TodoListFragment : Fragment() {
 
     private fun deleteTodo(todo: Todo) {
         viewModel.deleteTodo(todo)
-        adapter.deleteItem(todo)
     }
 
 }

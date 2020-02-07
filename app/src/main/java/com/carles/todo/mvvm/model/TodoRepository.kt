@@ -1,10 +1,10 @@
-package com.carles.todo.mvvm.data
+package com.carles.todo.mvvm.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.carles.todo.mvvm.AppExecutors
+import com.carles.todo.mvvm.R
 import com.carles.todo.mvvm.Resource
-import com.carles.todo.mvvm.model.Todo
 
 class TodoRepository(private val dao: TodoDao, private val executors: AppExecutors) {
 
@@ -13,10 +13,7 @@ class TodoRepository(private val dao: TodoDao, private val executors: AppExecuto
         result.value = Resource.Loading()
 
         val dbSource = dao.getTodos()
-        result.addSource(dbSource) { todos ->
-            result.removeSource(dbSource)
-            result.value = Resource.Success(todos)
-        }
+        result.addSource(dbSource) { todos -> result.value = Resource.Success(todos) }
 
         return result
     }

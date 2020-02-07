@@ -7,8 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.carles.todo.mvvm.Resource
 import com.carles.todo.mvvm.SingleLiveEvent
-import com.carles.todo.mvvm.data.TodoRepository
 import com.carles.todo.mvvm.model.Todo
+import com.carles.todo.mvvm.model.TodoLocation
+import com.carles.todo.mvvm.model.TodoRepository
 import com.google.android.gms.location.FusedLocationProviderClient
 import java.util.*
 
@@ -31,10 +32,15 @@ class TodoListViewModel(
         _todoListLiveData = repository.getTodos()
     }
 
-    fun addTodo() {
+    fun addTodo(locationAllowed:Boolean) {
         _loading.value = true
-
         val date = Date().time
+
+        if (!locationAllowed) {
+            navigateToAddTodo(date, getDefaultLocation())
+            return
+        }
+
         locationClient.lastLocation.addOnSuccessListener { location: Location? ->
             if (location != null) {
                 navigateToAddTodo(date, location)
@@ -48,7 +54,11 @@ class TodoListViewModel(
 
     private fun navigateToAddTodo(date: Long, location: Location) {
         _loading.value = false
-        _navigateToAddTodo.value = Todo(name = "", date = date, latitude = location.latitude, longitude = location.longitude)
+        _navigateToAddTodo.value = Todo(
+            name = "",
+            date = date,
+            location = TodoLocation(location.latitude, location.longitude)
+        )
     }
 
     private fun getDefaultLocation() = Location("dummy_provider")
