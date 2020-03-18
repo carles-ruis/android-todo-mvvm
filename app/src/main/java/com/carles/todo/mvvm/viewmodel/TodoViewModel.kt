@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.carles.todo.mvvm.SingleLiveEvent
+import com.carles.todo.mvvm.LiveEvent
 import com.carles.todo.mvvm.model.Todo
 import com.carles.todo.mvvm.model.TodoRepository
 
@@ -14,15 +14,15 @@ class TodoViewModel(
     private val repository: TodoRepository
 ) : AndroidViewModel(application) {
 
-    val todo: LiveData<Todo> get() = MutableLiveData(_todo)
+    val todo: LiveData<Todo> get() = MutableLiveData<Todo>(_todo)
 
     private val _enableConfirmButton = MutableLiveData<Boolean>()
     val enableConfirmButton: LiveData<Boolean> get() = _enableConfirmButton
 
-    private val _openCalendarEvent = SingleLiveEvent<Long>()
+    private val _openCalendarEvent = LiveEvent<Long>()
     val openCalendarEvent: LiveData<Long> get() = _openCalendarEvent
 
-    private val _navigateBackEvent = SingleLiveEvent<Void>()
+    private val _navigateBackEvent = LiveEvent<Void>()
     val navigateBackEvent: LiveData<Void> get() = _navigateBackEvent
 
     init {

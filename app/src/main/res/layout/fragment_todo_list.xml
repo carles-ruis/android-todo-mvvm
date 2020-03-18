@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".view.MainActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/todolist_toolbar"
@@ -26,6 +27,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/todolist_toolbar"
+        tools:itemCount="10"
         tools:listitem="@layout/item_todo" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
